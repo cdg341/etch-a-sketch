@@ -1,15 +1,15 @@
 let clear = document.querySelector(".clear");
+let pick = document.querySelector("button");
 
 //Get grid size from user input
-function populateBoard(size) {
+function sketchGrid(size) {
   let grid = document.querySelector(".grid");
   let squares = grid.querySelectorAll("div");
 
   squares.forEach((div) => div.remove());
-
   size = prompt("Enter a number between 2 and 64");
 
-  while (size < 2 || size > 64) {
+  while (isNaN(size) || size < 2 || size > 64) {
     alert("Please enter a number between 2 and 64");
     size = prompt("Enter a number between 2 and 64");
   }
@@ -31,12 +31,11 @@ function populateBoard(size) {
   }
 }
 
-//Clear the board
-function reset() {
-  clear.addEventListener("mousedown", () => {
-    populateBoard();
+//Event listener for picking a number
+function chooseNumber() {
+  pick.addEventListener("click", () => {
+    sketchGrid();
   });
 }
 
-populateBoard();
-reset();
+chooseNumber();
