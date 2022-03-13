@@ -2,14 +2,14 @@ let clear = document.querySelector(".clear");
 let pick = document.querySelector("button");
 let rgb = document.querySelector(".rgb");
 let range = document.querySelector("input");
-let slider = document.getElementById("slider");
+let sliderText = document.getElementById("sliderText");
 
 //BLACK SQUARES
 function sketch() {
   let grid = document.querySelector(".grid");
   let squares = grid.querySelectorAll("div");
-
-  //   squares.forEach((div) => div.remove());
+  let size = range.value;
+  //squares.forEach((div) => div.remove());
   /*  size = prompt("Enter a number between 2 and 64");
 
   while (isNaN(size) || size < 2 || size > 64) {
@@ -17,19 +17,17 @@ function sketch() {
     size = prompt("Enter a number between 2 and 64");
   } */
 
-  sliderBar();
+  grid.style.gridTemplateColumns = `repeat(${size} , 1fr)`;
+  grid.style.gridTemplateRows = `repeat(${size} , 1fr)`;
 
-  grid.style.gridTemplateColumns = `repeat(${range.value} , 1fr)`;
-  grid.style.gridTemplateRows = `repeat(${range.value} , 1fr)`;
-
-  let amount = range.value;
+  let amount = size * size;
 
   for (let i = 0; i < amount; i++) {
     let square = document.createElement("div");
     square.className = "square";
 
     square.addEventListener("mouseover", () => {
-      square.style.background = "black";
+      square.style.background = "#" + Math.floor(Math.random() * 16777215).toString(16);
     });
 
     grid.appendChild(square);
@@ -37,7 +35,7 @@ function sketch() {
 }
 
 //RGB SQUARES
-function sketchRGB(size) {
+/* function sketchRGB(size) {
   let grid = document.querySelector(".grid");
   let squares = grid.querySelectorAll("div");
 
@@ -64,30 +62,19 @@ function sketchRGB(size) {
 
     grid.appendChild(square);
   }
-}
+} */
 
-//Event listener for picking a number
-function chooseNumber() {
-  pick.addEventListener("click", () => {
-    sketch();
-  });
-}
-
-function rgbButton() {
-  rgb.addEventListener("click", () => {
-    sketchRGB();
-  });
-}
-
-//Slider bar
-function sliderBar(amount) {
+//Update text for slider bar
+function sliderBar() {
   range.addEventListener("input", function (e) {
-    slider.textContent = e.target.value;
+    sliderText.textContent = e.target.value;
   });
-  amount = range.value * range.value;
 }
 
-/* chooseNumber(); */
-rgbButton();
+range.addEventListener("input", sliderChange);
 
+function sliderChange() {
+  console.log(this.value);
+}
 sketch();
+sliderBar();
