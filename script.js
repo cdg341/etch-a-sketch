@@ -1,24 +1,28 @@
 let clear = document.querySelector(".clear");
 let pick = document.querySelector("button");
 let rgb = document.querySelector(".rgb");
+let range = document.querySelector("input");
+let slider = document.getElementById("slider");
 
 //BLACK SQUARES
-function sketch(size) {
+function sketch() {
   let grid = document.querySelector(".grid");
   let squares = grid.querySelectorAll("div");
 
-  squares.forEach((div) => div.remove());
-  size = prompt("Enter a number between 2 and 64");
+  //   squares.forEach((div) => div.remove());
+  /*  size = prompt("Enter a number between 2 and 64");
 
   while (isNaN(size) || size < 2 || size > 64) {
     alert("Please enter a number between 2 and 64");
     size = prompt("Enter a number between 2 and 64");
-  }
+  } */
 
-  grid.style.gridTemplateColumns = `repeat(${size} , 1fr)`;
-  grid.style.gridTemplateRows = `repeat(${size} , 1fr)`;
+  sliderBar();
 
-  let amount = size * size;
+  grid.style.gridTemplateColumns = `repeat(${range.value} , 1fr)`;
+  grid.style.gridTemplateRows = `repeat(${range.value} , 1fr)`;
+
+  let amount = range.value;
 
   for (let i = 0; i < amount; i++) {
     let square = document.createElement("div");
@@ -75,5 +79,15 @@ function rgbButton() {
   });
 }
 
-chooseNumber();
+//Slider bar
+function sliderBar(amount) {
+  range.addEventListener("input", function (e) {
+    slider.textContent = e.target.value;
+  });
+  amount = range.value * range.value;
+}
+
+/* chooseNumber(); */
 rgbButton();
+
+sketch();
